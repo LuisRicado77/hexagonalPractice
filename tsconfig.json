@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "ES2021", 
+    "module": "commonJS", 
+    "moduleResolution": "node", 
+    "esModuleInterop": true, 
+    "outDir": "./dist",
+    
+  }
+}
