@@ -1,6 +1,6 @@
-import { IEvent, IEventCreate } from "../interfaces/Event.interface"
+import { IEvent, IEventCreate } from "../interfaces/iEvent.interface"
 
 export interface IEventService{
-    create: (event: IEventCreate) => Promise<IEvent>
+    create: (event: IEventCreate) => Promise<IEvent>,
     get: (id: IEvent['id']) => Promise<IEvent>
 }

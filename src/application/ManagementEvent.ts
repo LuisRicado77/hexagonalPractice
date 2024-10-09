@@ -1,5 +1,5 @@
 import { IEventService } from "../domain/services/IEvent.service";
-import { IEventCreate } from "../domain/interfaces/Event.interface";
+import { IEventCreate } from "../domain/interfaces/iEvent.interface";
 import { NotCreatedError } from "../domain/errors/NotCreateError";
 
 export class RegisterEvent {
