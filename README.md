@@ -1,5 +1,5 @@
 # hexagonalPractice
-
+# conexion a otro equipo
 Gestión de Eventos
 
 Objetivo:
