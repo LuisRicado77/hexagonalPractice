@@ -1,18 +1,62 @@
 import { EventService } from "../services/Event.service";
-
+import {schemaValidator} from "../middleware/schema.middleware";
 import { Response, Request, Router } from "express";
-import {RegisterEvent} from "../../application/ManagementEvent";
+import { ManagementEvent } from '../../application/ManagementEvent';
+import { ResponseAdapter } from './responseAdapter';
+import { NotFoundError } from "../../domain/errors/NotFoundError";
+import {eventSchemaCreate,eventSchemaUpdate} from "../schema/event.schema";
 
 
 const EventSrv = new EventService();
 
-const registerUseCase =  new RegisterEvent(EventSrv)
+const ManagementUseCase =  new ManagementEvent(EventSrv)
 
 
 const eventRouter = Router();
-
-eventRouter.post("/", async (req: Request, res: Response) =>{
+//add
+eventRouter.post("/",schemaValidator(eventSchemaCreate) ,async (req: Request, res: Response) =>{
     const body = req.body
+    ResponseAdapter.handler(ManagementUseCase.register(body), req, res);
+})
+
+//getAll
+eventRouter.get("/", async (res: Response, req: Request)=>{
+    try {
+        ResponseAdapter.handler(ManagementUseCase.getAll(),req,res);
+    } catch (error) {
+        throw new NotFoundError();
+    }
+})
+
+//get
+eventRouter.get("/:id", async (res: Response, req: Request) =>{
+    const {id} = req.params
+    try{
+        ResponseAdapter.handler(ManagementUseCase.getEventById(id),req,res)
+    }catch(Error){
+        throw new NotFoundError();
+    }
+})
+
+//delete
+eventRouter.delete("/:id", async (req:Request, res: Response) =>{
+    const {id} = req.params
+    try{
+        ResponseAdapter.handler(ManagementUseCase.delete(id),req, res)
+    }catch(error){
+        throw new NotFoundError();
+    }
+})
+
+//update
+eventRouter.put("/id",schemaValidator(eventSchemaUpdate) , async (req: Request, res:Response) =>{
+    const {id} = req.params;
+    const body = req.body;
+    try {
+        ResponseAdapter.handler(ManagementUseCase.update(id,body), req,res)
+    } catch (error) {
+        
+    }
 })
 
 export {eventRouter}

@@ -1,8 +1,9 @@
 import { IEventService } from "../domain/services/IEvent.service";
-import { IEventCreate } from "../domain/interfaces/iEvent.interface";
+import { IEvent, IEventCreate } from '../domain/interfaces/iEvent.interface';
 import { NotCreatedError } from "../domain/errors/NotCreateError";
+import { NotFoundError } from "../domain/errors/NotFoundError";
 
-export class RegisterEvent {
+export class ManagementEvent {
   constructor(private readonly eventSrv: IEventService) {}
 
   async register(event: IEventCreate) {
@@ -18,4 +19,41 @@ export class RegisterEvent {
       throw error || new NotCreatedError();
     }
   }
+
+  async update(id: string, event: IEvent){
+    console.log("se ejecuto aplication")
+    try {
+      const updateEvent = await this.eventSrv.update(id,event)
+    } catch (error) {
+      
+    }
+  }
+
+  async getEventById(id: string) {
+    try {
+      const event = await this.eventSrv.getById(id);
+      if (!event) throw new NotFoundError()
+      return event;
+    } catch (error) {
+      throw error || new NotFoundError("Could not get data");
+    }
+  }
+
+
+  async delete(id: string) {
+    try {
+      await this.eventSrv.delete(id);
+    } catch (error) {
+      throw error || new NotFoundError("Could not delete the event");
+    }
+  }
+
+  async getAll(){
+    try{
+      await this.eventSrv.getAll()
+    }catch (error){
+      throw error || new NotFoundError("Could not found data");
+    }
+  }
+
 }

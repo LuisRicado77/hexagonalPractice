@@ -1,5 +1,6 @@
 # hexagonalPractice
-# conexion a otro equipo
+# LUIS DANIEL RICARDO SAYAS
+# luis.ricardo@unicolombo.edu.co
 Gestión de Eventos
 
 Objetivo:

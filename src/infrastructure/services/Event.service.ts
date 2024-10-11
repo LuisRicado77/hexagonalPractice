@@ -24,7 +24,7 @@ export class EventService implements IEventService {
         
     };
 
-    async get(id: IEvent['id']): Promise<IEvent>{
+    async getById(id: IEvent['id']): Promise<IEvent>{
         
         
         try {
@@ -36,13 +36,16 @@ export class EventService implements IEventService {
         }
     }
 
-    async update(event: IEventCreate): Promise<IEvent>{
-
-        const updatedEvent = await EventModel.findByIdAndUpdate(event, { new: true });
-        if (!updatedEvent) {
-            throw new NotFoundError(`Event not found`);
+    async update(id: IEvent['id'], event: IEventCreate): Promise<IEvent> {
+        try {
+            const updatedEvent = await EventModel.findByIdAndUpdate(id, event, { new: true });
+            if (!updatedEvent) {
+                throw new NotFoundError(`Event not found`);
+            }
+            return updatedEvent;
+        } catch (error) {
+            throw new NotFoundError(`Error at updating: ${error.message}`);
         }
-        return updatedEvent;
     }
 
 
@@ -56,7 +59,8 @@ export class EventService implements IEventService {
 
     async getAll(): Promise<IEvent[]>{
         try {
-            return await EventModel.find();
+            const events = EventModel.find(); 
+            return await events;
         } catch (error) {
             throw new NotFoundError("Error information not found");
         }
