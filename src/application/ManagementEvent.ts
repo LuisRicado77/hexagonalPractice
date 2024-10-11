@@ -32,7 +32,6 @@ export class ManagementEvent {
   async getEventById(id: string) {
     try {
       const event = await this.eventSrv.getById(id);
-      if (!event) throw new NotFoundError()
       return event;
     } catch (error) {
       throw error || new NotFoundError("Could not get data");
@@ -50,9 +49,10 @@ export class ManagementEvent {
 
   async getAll(){
     try{
-      await this.eventSrv.getAll()
+      const events = this.eventSrv.getAll()
+      return await events;
     }catch (error){
-      throw error || new NotFoundError("Could not found data");
+      throw error || new NotFoundError("Could not found datas");
     }
   }
 
