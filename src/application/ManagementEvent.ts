@@ -24,8 +24,10 @@ export class ManagementEvent {
     console.log("se ejecuto aplication")
     try {
       const updateEvent = await this.eventSrv.update(id,event)
+      return updateEvent;
+
     } catch (error) {
-      
+      throw error || new NotCreatedError();
     }
   }
 

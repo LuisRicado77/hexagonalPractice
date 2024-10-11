@@ -53,7 +53,7 @@ eventRouter.delete("/:id", async (req:Request, res: Response) =>{
 })
 
 //update
-eventRouter.patch("/id",schemaValidator(eventSchemaUpdate) , async (req: Request, res: Response) =>{
+eventRouter.patch("/:id",schemaValidator(eventSchemaUpdate) , async (req: Request, res: Response) =>{
     const {id} = req.params;
     const body = req.body;
     try {
