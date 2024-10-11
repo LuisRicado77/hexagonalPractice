@@ -10,6 +10,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/events", eventRouter);
+app.use(express.urlencoded({ extended: true })); 
 
 
 

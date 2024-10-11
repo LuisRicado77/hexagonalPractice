@@ -20,7 +20,7 @@ eventRouter.post("/",schemaValidator(eventSchemaCreate) ,async (req: Request, re
 })
 
 //getAll
-eventRouter.get("/", async (res: Response, req: Request)=>{
+eventRouter.get("/", async (req: Request, res: Response)=>{
     try {
         ResponseAdapter.handler(ManagementUseCase.getAll(),req,res);
     } catch (error) {
@@ -28,10 +28,14 @@ eventRouter.get("/", async (res: Response, req: Request)=>{
     }
 })
 
+
 //get
-eventRouter.get("/:id", async (res: Response, req: Request) =>{
-    const {id} = req.params
+eventRouter.get("/:id", async (req: Request, res: Response) =>{
+    
+    
     try{
+        const {id} = req.params;
+        console.log(id);
         ResponseAdapter.handler(ManagementUseCase.getEventById(id),req,res)
     }catch(Error){
         throw new NotFoundError();
@@ -40,7 +44,7 @@ eventRouter.get("/:id", async (res: Response, req: Request) =>{
 
 //delete
 eventRouter.delete("/:id", async (req:Request, res: Response) =>{
-    const {id} = req.params
+    const id = req.params.id
     try{
         ResponseAdapter.handler(ManagementUseCase.delete(id),req, res)
     }catch(error){
@@ -49,13 +53,13 @@ eventRouter.delete("/:id", async (req:Request, res: Response) =>{
 })
 
 //update
-eventRouter.put("/id",schemaValidator(eventSchemaUpdate) , async (req: Request, res:Response) =>{
+eventRouter.patch("/id",schemaValidator(eventSchemaUpdate) , async (req: Request, res: Response) =>{
     const {id} = req.params;
     const body = req.body;
     try {
         ResponseAdapter.handler(ManagementUseCase.update(id,body), req,res)
     } catch (error) {
-        
+        throw new NotFoundError();
     }
 })
 
