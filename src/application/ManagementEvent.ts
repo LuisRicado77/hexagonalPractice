@@ -21,7 +21,7 @@ export class ManagementEvent {
   }
 
   async update(id: string, event: IEvent){
-    console.log("se ejecuto aplication")
+    //console.log("se ejecuto aplication")
     try {
       const updateEvent = await this.eventSrv.update(id,event)
       return updateEvent;
@@ -54,7 +54,7 @@ export class ManagementEvent {
       const events = this.eventSrv.getAll()
       return await events;
     }catch (error){
-      throw error || new NotFoundError("Could not found datas");
+      throw error || new NotFoundError("Could not found data");
     }
   }
 
