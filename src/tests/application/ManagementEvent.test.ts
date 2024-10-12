@@ -203,7 +203,7 @@ describe("Test use case Management Event CRUD", () => {
     const deleteId = "33432";
 
     //act and assert
-    await expect(useCaseError.delete(deleteId)).resolves.toBeUndefined();
+    await expect(useCaseDelete.delete(deleteId)).resolves.toBeUndefined();
 
 
   })
